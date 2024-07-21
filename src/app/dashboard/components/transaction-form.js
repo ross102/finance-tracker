@@ -9,10 +9,10 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import { transactionSchema } from "@/lib/validation";
 import { useState } from "react";
 import { useRouter } from "next/navigation"
-import { createTransaction } from "@/lib/action";
+import { createTransaction, updateTransaction } from "@/lib/action";
 import FormError from "@/components/form-error";
 
-export default function TransactionForm() {
+export default function TransactionForm({ initialData}) {
     const {
         register,
         handleSubmit,
@@ -26,16 +26,25 @@ export default function TransactionForm() {
       const router = useRouter()
       const [isSaving, setSaving] = useState(false)
       const [lastError, setLastError] = useState();
-      const type = watch("type")
+      const type = watch("type");
+      const editing = Boolean(initialData)
 
 
       const onSubmit = async (data) => {
         setSaving(true)
         setLastError()
         try {
-         
-          await createTransaction(data)
+          if (editing) {
+            // Edit action
+            await updateTransaction(
+              initialData.id,
+              data
+            )
+          } else {
+            await createTransaction(data)
+          }
           router.push('/dashboard')
+         
         } 
         catch (error) {
           setLastError(error)
@@ -87,7 +96,7 @@ export default function TransactionForm() {
 
       <div className="col-span-1 col-span-2">
         <Label className="mb-1">Description</Label>
-        <Input {...register("description")} />
+        <Input {...register("description")} disabled={editing}  />
         <FormError error={errors.description} />
       </div>
     </div>

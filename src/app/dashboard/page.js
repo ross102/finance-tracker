@@ -8,12 +8,15 @@ import Loading from "./loading";
 import Trend from "./components/trend"
 import TrendFallback from "./components/trend-fallback";
 import { ErrorBoundary } from "react-error-boundary";
+import { createClient } from "@/lib/supabase/server"
 import { types } from "@/lib/consts";
 import Range from "./components/range"
 import TransactionListWrapper from "./components/transaction-list-wrapper"
 
-export default function Page({ searchParams }) {
+export default async function Page({ searchParams }) {
      const range = searchParams?.range ?? 'last30days'
+     const supabase = createClient()
+     console.log(await supabase.auth.getUser())
 
     return (<div className="space-y-8">
     <section className="flex justify-between items-center">
