@@ -1,6 +1,7 @@
 'use server'
 import { revalidatePath } from 'next/cache'
 import { createClient } from './supabase/server'
+import { transactionSchema } from './validation'
 import { redirect } from 'next/navigation'
 
 export async function purgeTransactionListCache() {
