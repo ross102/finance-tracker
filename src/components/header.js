@@ -17,10 +17,10 @@ export default async function PageHeader({className}) {
 
       <div className="flex items-center space-x-4">
       <DarkModeToggle defaultMode={theme} />
-      {user && <Button variant="ghost" size="sm" className="flex items-center space-x-1">
+      {user && <Link href="/dashboard/settings" className={`flex items-center space-x-1 ${variants['ghost']} ${sizes['sm']}`}>
           <CircleUser className="w-6 h-6" />
           <span>{user?.email}</span>  
-        </Button>}
+          </Link>}
          {user && <SignOutButton />}
         {!user && <Link href="/login" className={`${variants['ghost']} ${sizes['sm']}`}>
           <KeyRound className="w-6 h-6" />  

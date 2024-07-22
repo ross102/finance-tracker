@@ -5,10 +5,9 @@ import { faker } from '@faker-js/faker'
 dotenv.config({ path: '.env.local' })
 
 const supabase = createClient(
-  process.env.SUPABASE_SERVICE_ROLE,
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 )
-
 const categories = [
   'Housing', 'Transport', 'Health', 'Food', 'Education', 'Other'
 ]
