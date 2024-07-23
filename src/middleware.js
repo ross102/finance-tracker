@@ -5,7 +5,7 @@ import { createClient } from './lib/supabase/server'
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
     const { data: { user }} = await createClient().auth.getUser()
-
+   
   if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
     return Response.redirect(new URL('/login', request.url))
   }

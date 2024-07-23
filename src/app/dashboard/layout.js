@@ -5,7 +5,7 @@ export default function Layout({children}) {
   <>
     <PageHeader className="mt-8" />
     <main>{children}</main>
-    <footer>Footer</footer>
+    
   </>
   )
 }

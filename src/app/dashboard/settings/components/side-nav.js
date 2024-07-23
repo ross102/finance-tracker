@@ -1,14 +1,20 @@
 'use client'
 
 import Link from 'next/link'
-import { User, Camera, Settings } from 'lucide-react'
+import { User, Camera, Settings, Home } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
 export default function SideNav() {
   const pathname = usePathname()
   console.log(pathname)
   return <nav>
-    <ul className="space-y-2">
+    <ul className="space-y-2 mt-2">
+    <li>
+        <Link href="/dashboard" className={`px-2.5 py-2 flex items-center space-x-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 ${pathname === '/dashboard' ? 'bg-gray-100 dark:bg-gray-800' : ''}`}>
+          <Home className="w-4 h-4" />
+          <span>Dashboard</span>
+        </Link>
+      </li>
       <li>
         <Link href="/dashboard/settings" className={`px-2.5 py-2 flex items-center space-x-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 ${pathname === '/dashboard/settings' ? 'bg-gray-100 dark:bg-gray-800' : ''}`}>
           <Settings className="w-4 h-4" />

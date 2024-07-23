@@ -6,6 +6,7 @@ import Button from './button'
 import {CircleUser, KeyRound} from 'lucide-react'
 import { sizes, variants } from '@/lib/variants'
 import SignOutButton from './sign-out-button'
+import Avatar from './avatar'
 
 export default async function PageHeader({className}) {
     const theme = useServerDarkMode();
@@ -18,8 +19,8 @@ export default async function PageHeader({className}) {
       <div className="flex items-center space-x-4">
       <DarkModeToggle defaultMode={theme} />
       {user && <Link href="/dashboard/settings" className={`flex items-center space-x-1 ${variants['ghost']} ${sizes['sm']}`}>
-          <CircleUser className="w-6 h-6" />
-          <span>{user?.email}</span>  
+      <Avatar />
+      <span>{user?.user_metadata?.fullName ?? user?.email}</span>  
           </Link>}
          {user && <SignOutButton />}
         {!user && <Link href="/login" className={`${variants['ghost']} ${sizes['sm']}`}>

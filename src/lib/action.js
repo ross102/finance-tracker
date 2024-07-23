@@ -90,3 +90,63 @@ export async function signOut() {
   const { error } = await supabase.auth.signOut()
   redirect('/login')
 }
+
+export async function uploadAvatar(prevState, formData) {
+  const supabase = createClient()
+  const file = formData.get('file')
+  const fileExt = file.name.split('.').pop()
+  const fileName = `${Math.random()}.${fileExt}`
+  const {error} = await supabase.storage
+    .from('avatar')
+    .upload(fileName, file)
+  if (error) {
+    console.log(error)
+    return {
+      error: true,
+      message: 'Error uploading avatar'
+    }
+  }
+
+  const { error: dataUpdateError } = await supabase.auth
+  .updateUser({
+    data: {
+      avatar: fileName
+    }
+  })
+if (dataUpdateError) {
+  return {
+    error: true,
+    message: 'Error associating the avatar with the user'
+  }
+}
+
+return {
+  message: 'Updated the user avatar'
+
+}
+
+}
+
+export async function updateSettings() {
+
+  const supabase = createClient()
+  const {error} = await supabase.auth
+    .updateUser({
+      data: {
+        fullName: formData.get('fullName'),
+        defaultView: formData.get('defaultView')
+      }
+    })
+
+  if (error) {
+    return{
+      error: true,
+      message: 'Failed updating setting'
+    }
+  }
+
+  return {
+    message: 'Updated user settings'
+  }
+
+}
